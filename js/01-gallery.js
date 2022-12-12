@@ -20,6 +20,9 @@ function createMarcupItems(items){
 
 const collectionImages = createMarcupItems(galleryItems);
 
+
+
+
 conteinerImages.insertAdjacentHTML('afterbegin', collectionImages);
 
 conteinerImages.addEventListener('click', openImage);
@@ -30,19 +33,28 @@ function openImage(evt){
     if(evt.target.nodeName !== 'IMG'){
         return;
     }
-
- const instance = basicLightbox.create(`
+    const instance = basicLightbox.create(`
     <img src='${evt.target.dataset.source}' width = '800' height = '600'>
-`);
-instance.show();
+     `);
 
-conteinerImages.addEventListener('keydown', (evt) => {
-    if(evt.code === 'Escape'){
-        instance.close();
+    instance.show();
+
+    conteinerImages.addEventListener('keydown', closeImage); 
+
+    function closeImage(evt) {
+      if(evt.code === 'Escape'){
+         instance.close(); 
+         conteinerImages.removeEventListener('keydown', closeImage);
     };
-})
-
+  };
+    
 };
+
+
+
+
+
+
 
 
 
